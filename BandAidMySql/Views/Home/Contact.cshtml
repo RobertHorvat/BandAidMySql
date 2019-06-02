@@ -1,17 +1,76 @@
-﻿@{
-    ViewData["Title"] = "Contact";
-}
-<h2>@ViewData["Title"]</h2>
-<h3>@ViewData["Message"]</h3>
+﻿@model BandAidMySql.Models.PomocneKlase.ContactUser
+<div class="container">
+    <div class="row justify-content-center mb-5">
+        <div class="col-md-7 text-center border-primary">
+            <h2 class="font-weight-light text-primary">Kontaktiraj nas</h2>
+            <p class="color-black-opacity-5">Prati dnevne novosti &amp; Updateove</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-7 mb-5">
 
-<address>
-    One Microsoft Way<br />
-    Redmond, WA 98052-6399<br />
-    <abbr title="Phone">P:</abbr>
-    425.555.0100
-</address>
+            <form role="form" asp-action="Contact" asp-controller="Home" method="post" class="p-5 bg-white">
 
-<address>
-    <strong>Support:</strong> <a href="mailto:Support@example.com">Support@example.com</a><br />
-    <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
-</address>
+                <div class="row form-group">
+                    <div class="col-md-6 mb-3 mb-md-0">
+                        <label class="text-black" for="fname">Ime</label>
+                        <input type="text" name="FirstName" class="form-control">
+                        <span asp-validation-for="FirstName" class="alert-danger"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="text-black" for="lname">Prezime</label>
+                        <input type="text" name="LastName" class="form-control">
+                        <span asp-validation-for="LastName" class="alert-danger"></span>
+                    </div>
+                </div>
+                <div class="row form-group">
+
+                    <div class="col-md-12">
+                        <label class="text-black" for="email">Email</label>
+                        <input type="email" name="Email" class="form-control">
+                        <span asp-validation-for="Email" class="alert-danger"></span>
+                    </div>
+                </div>
+                <div class="row form-group">
+
+                    <div class="col-md-12">
+                        <label class="text-black" for="subject">Tema</label>
+                        <input type="text" name="Subject" class="form-control">
+                        <span asp-validation-for="Subject" class="alert-danger"></span>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-md-12">
+                        <label class="text-black" for="message">Poruka</label>
+                        <textarea name="Message" cols="30" rows="7" class="form-control"></textarea>
+                        <span asp-validation-for="Message" class="alert-danger"></span>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-md-12">
+                        <input type="submit" value="Pošalji poruku" class="btn btn-primary py-2 px-4 text-white">
+                    </div>
+                </div>
+
+            </form>
+        </div>
+        <div class="col-md-5">
+
+            <div class="p-4 mb-3 bg-white">
+                <p class="mb-0 font-weight-bold">Adresa</p>
+                <p class="mb-4">
+                    BANA JOSIPA JELAČIĆA 22a, 40 000 Čakovec
+                </p>
+                <p class="mb-0 font-weight-bold">Telefon</p>
+                <p class="mb-4"><a href="#">+385 99 3791 050</a></p>
+                <p class="mb-0 font-weight-bold">Email Address</p>
+                <p class="mb-0"><a href="#">band.aid.info2019@gmail.com</a></p>
+                <p class="mb-0 font-weight-bold">@ViewBag.Info</p>
+                <p class="mb-0">@ViewBag.Message</p>
+
+            </div>
+
+
+        </div>
+    </div>
+</div>
