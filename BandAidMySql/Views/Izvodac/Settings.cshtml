@@ -1,0 +1,390 @@
+﻿@model BandAidMySql.Models.Users
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Required meta tags-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="au theme template">
+    <meta name="author" content="Hau Nguyen">
+    <meta name="keywords" content="au theme template">
+    <!-- Title Page-->
+    <title>BandAid</title>
+    <!-- Fontfaces CSS-->
+    <link href="~/AdminTemplate/css/font-face.css" rel="stylesheet" media="all">
+    <link href="~/AdminTemplate/vendor/font-awesome-4.7/css/font-awesome.min.css" rel="stylesheet" media="all">
+    <link href="~/AdminTemplate/vendor/font-awesome-5/css/fontawesome-all.min.css" rel="stylesheet" media="all">
+    <link href="~/AdminTemplate/vendor/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
+    <!-- Bootstrap CSS-->
+    <link href="~/AdminTemplate/vendor/bootstrap-4.1/bootstrap.min.css" rel="stylesheet" media="all">
+    <!-- Vendor CSS-->
+    <link href="~/AdminTemplate/vendor/animsition/animsition.min.css" rel="stylesheet" media="all">
+    <link href="~/AdminTemplate/vendor/bootstrap-progressbar/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet" media="all">
+    <link href="~/AdminTemplate/vendor/wow/animate.css" rel="stylesheet" media="all">
+    <link href="~/AdminTemplate/vendor/css-hamburgers/hamburgers.min.css" rel="stylesheet" media="all">
+    <link href="~/AdminTemplate/vendor/slick/slick.css" rel="stylesheet" media="all">
+    <link href="~/AdminTemplate/vendor/select2/select2.min.css" rel="stylesheet" media="all">
+    <link href="~/AdminTemplate/vendor/perfect-scrollbar/perfect-scrollbar.css" rel="stylesheet" media="all">
+    <!-- Main CSS-->
+    <link href="~/AdminTemplate/css/theme.css" rel="stylesheet" media="all">
+</head>
+<body class="animsition">
+    <div class="page-wrapper">
+        <!-- HEADER DESKTOP-->
+        <header class="header-desktop3 d-none d-lg-block">
+            <div class="section__content section__content--p35">
+                <div class="header3-wrap">
+                    <div class="header__logo">
+                        <a asp-action="Index" asp-controller="Izvodac">
+                            <img src="~/AdminTemplate/images/icon/BandAid.png" alt="BandAid" />
+                        </a>
+                    </div>
+                    <div class="header__navbar">
+                        <ul class="list-unstyled">
+                            <li>
+                                <a asp-action="Index" asp-controller="Izvodac">
+                                    <i class="fas fa-address-book-o"></i>Početna
+                                    <span class="bot-line"></span>
+                                </a>
+                            </li>
+                            <li>
+                                <a asp-controller="Izvodac" asp-action="LoggedEvents">
+                                    <i class="fas fa-tachometer-alt"></i>Prijavljeni Eventi
+                                    <span class="bot-line"></span>
+                                </a>
+                            </li>
+                            <li>
+                                <a asp-controller="Izvodac" asp-action="OverEvents">
+                                    <i class="fas fa-shopping-basket"></i>
+                                    <span class="bot-line"></span>Odrađeni Eventi
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="header__tool">
+
+                        <div class="account-wrap">
+                            <div class="account-item account-item--style2 clearfix js-item-menu">
+                                <div class="image">
+                                    <img src="@Model.ProfileImg" alt="Profile" />
+                                </div>
+                                <div class="content">
+                                    <a class="js-acc-btn">@Model.Name</a>
+                                </div>
+                                <div class="account-dropdown js-dropdown">
+                                    <div class="info clearfix">
+                                        <div class="image">
+                                            <a>
+                                                <img src="@Model.ProfileImg" alt="Admin" />
+                                            </a>
+                                        </div>
+                                        <div class="content">
+                                            <h5 class="name">
+                                                <a>@Model.Name</a>
+                                            </h5>
+                                            <span class="email">@Model.Email</span>
+                                        </div>
+                                    </div>
+                                    <div class="account-dropdown__body">
+                                        <a asp-controller="Izvodac" asp-action="Settings">
+                                            <i class="zmdi zmdi-settings"></i>Postavke
+                                        </a>
+
+                                    </div>
+                                    <div class="account-dropdown__footer">
+                                        <a asp-controller="User" asp-action="Logout">
+                                            <i class="zmdi zmdi-power"></i>Odjava
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- END HEADER DESKTOP-->
+        <!-- HEADER MOBILE-->
+        <header class="header-mobile header-mobile-2 d-block d-lg-none">
+            <div class="header-mobile__bar">
+                <div class="container-fluid">
+                    <div class="header-mobile-inner">
+                        <a class="logo" asp-action="Index" asp-controller="Izvodac">
+                            <img src="~/AdminTemplate/images/icon/BandAid.png" alt="BandAid" />
+                        </a>
+                        <button class="hamburger hamburger--slider" type="button">
+                            <span class="hamburger-box">
+                                <span class="hamburger-inner"></span>
+                            </span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <nav class="navbar-mobile">
+                <div class="container-fluid">
+                    <ul class="navbar-mobile__list list-unstyled">
+                        <li>
+                            <a asp-action="Index" asp-controller="Izvodac">
+                                <i class="fas fa-address-book-o"></i>Početna
+
+                            </a>
+                        </li>
+                        <li>
+                            <a asp-controller="Izvodac" asp-action="LoggedEvents">
+                                <i class="fas fa-tachometer-alt"></i>Prijavljeni Eventi
+
+                            </a>
+                        </li>
+                        <li>
+                            <a asp-controller="Izvodac" asp-action="OverEvents">
+                                <i class="fas fa-shopping-basket"></i>
+                                Odrađeni Eventi
+                            </a>
+                        </li>
+
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        <div class="sub-header-mobile-2 d-block d-lg-none">
+            <div class="header__tool">
+
+
+                <div class="account-wrap">
+                    <div class="account-item account-item--style2 clearfix js-item-menu">
+                        <div class="image">
+                            <img src="@Model.ProfileImg" alt="Admin" />
+                        </div>
+                        <div class="content">
+                            <a class="js-acc-btn" href="#">@Model.Name</a>
+                        </div>
+                        <div class="account-dropdown js-dropdown">
+                            <div class="info clearfix">
+                                <div class="image">
+                                    <a asp-action="Index" asp-controller="Izvodac">
+                                        <img src="@Model.ProfileImg" alt="Profile" />
+                                    </a>
+                                </div>
+                                <div class="content">
+                                    <h5 class="name">
+                                        <a>@Model.Name</a>
+                                    </h5>
+                                    <span class="email">@Model.Email</span>
+                                </div>
+                            </div>
+                            <div class="account-dropdown__body">
+                                <a asp-action="Settings" asp-controller="Izvodac"></a>
+
+
+                            </div>
+                            <div class="account-dropdown__footer">
+                                <a asp-action="Logout" asp-controller="User">
+                                    <i class="zmdi zmdi-power"></i>Logout
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END HEADER MOBILE -->
+        <!-- PAGE CONTENT-->
+        <div class="page-content--bgf7">
+            <!-- BREADCRUMB-->
+            <section class="au-breadcrumb2">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="au-breadcrumb-content">
+                                <div class="au-breadcrumb-left">
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- END BREADCRUMB-->
+            <!-- WELCOME-->
+            <section class="welcome p-t-10">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h1 class="title-4">
+                                Dobrodošli,
+                                <span>@Model.Name!</span>
+                            </h1>
+                            <hr class="line-seprate">
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- END WELCOME-->
+            <div class="main-content">
+                <h3>Postavke računa</h3>
+                
+                <div class="section__content section__content--p30">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="card">
+                                <div class="card-header">
+                                    <strong>Detalji</strong>
+                                </div>
+                                <form asp-action="Settings" asp-controller="Izvodac" method="post" enctype="multipart/form-data" class="form-horizontal">
+                                    <div class="card-body card-block">
+
+                                        <div class="row form-group">
+                                            <div class="col col-md-3">
+                                                <label class=" form-control-label">Ime izvođača:</label>
+                                            </div>
+                                            <div class="col-12 col-md-9">
+                                                <p class="form-control-static">@Model.Name</p>
+                                            </div>
+                                        </div>
+                                        <div class="row form-group">
+                                            <div class="col col-md-3">
+                                                <label class=" form-control-label">E-mail izvođača:</label>
+                                            </div>
+                                            <div class="col-12 col-md-9">
+                                                <p class="form-control-static">@Model.Email</p>
+                                            </div>
+                                        </div>
+                                        <div class="row form-group">
+                                            <div class="col col-md-3">
+                                                <label class=" form-control-label">Broj telefona:</label>
+                                            </div>
+                                            <div class="col-12 col-md-9">
+                                                <input type="number" id="PhoneNumber" name="PhoneNumber" placeholder="Unesite kontakt telefon" class="form-control">
+
+                                            </div>
+                                        </div>
+                                        <div class="row form-group">
+                                            <div class="col col-md-3">
+                                                <label class=" form-control-label">Ulica:</label>
+                                            </div>
+                                            <div class="col-12 col-md-9">
+                                                <input type="text" id="Street" name="Street" placeholder="Unesite ulicu sjedišta" class="form-control">
+                                                <span asp-validation-for="Street"></span>
+                                            </div>
+                                        </div>
+                                        <div class="row form-group">
+                                            <div class="col col-md-3">
+                                                <label class=" form-control-label">Poštanski broj:</label>
+                                            </div>
+                                            <div class="col-12 col-md-9">
+                                                <input type="number" id="PostCode" name="PostCode" placeholder="Unesite poštanski broj" class="form-control">
+                                                <span asp-validation-for="PostCode"></span>
+                                            </div>
+                                        </div>
+                                        <div class="row form-group">
+                                            <div class="col col-md-3">
+                                                <label class=" form-control-label">Grad/općina:</label>
+                                            </div>
+                                            <div class="col-12 col-md-9">
+                                                <input type="text" id="City" name="City" placeholder="Unesite grad/općinu" class="form-control">
+                                                <span asp-validation-for="City"></span>
+                                            </div>
+                                        </div>
+                                        <div class="row form-group">
+                                            <div class="col col-md-3">
+                                                <label class=" form-control-label">Youtube:</label>
+                                            </div>
+                                            <div class="col-12 col-md-9">
+                                                <input type="text" id="Youtube" name="Youtube" placeholder="Unesite youtube link" class="form-control">
+
+                                            </div>
+                                        </div>
+                                        <div class="row form-group">
+                                            <div class="col col-md-3">
+                                                <label class=" form-control-label">Instagram:</label>
+                                            </div>
+                                            <div class="col-12 col-md-9">
+                                                <input type="text" id="Instagram" name="Instagram" placeholder="Unesite instagram link" class="form-control">
+
+                                            </div>
+                                        </div>
+                                        <div class="row form-group">
+                                            <div class="col col-md-3">
+                                                <label class=" form-control-label">Facebook:</label>
+                                            </div>
+                                            <div class="col-12 col-md-9">
+                                                <input type="text" id="Facebook" name="Facebook" placeholder="Unesite facebook link" class="form-control">
+
+                                            </div>
+                                        </div>
+                                        <div class="row form-group">
+                                            <div class="col col-md-3">
+                                                <label for="textarea-input" class=" form-control-label">Opis</label>
+                                            </div>
+                                            <div class="col-12 col-md-9">
+                                                <textarea name="Description" id="Description" rows="15" placeholder="Opis profila..." class="form-control"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="row form-group">
+                                            <div class="col col-md-3">
+                                                <label for="file-input" class=" form-control-label">Slika profila:</label>
+                                            </div>
+                                            <div class="col-12 col-md-9">
+                                                <input type="file" id="ProfileImg" name="Img" class="form-control-file">
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                    <div class="card-footer">
+                                        <button type="submit" class="btn btn-primary btn-sm">
+                                            <i class="fa fa-dot-circle-o"></i> Spremi
+                                        </button>
+                                        <button type="reset" class="btn btn-danger btn-sm">
+                                            <i class="fa fa-ban"></i> Odbaci
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- COPYRIGHT-->
+            <section class="p-t-60 p-b-20">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="copyright">
+                                <p> Designed &amp; Developed by MEV Computer Science students</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- END COPYRIGHT-->
+        </div>
+    </div>
+    <!-- Jquery JS-->
+    <script src="~/AdminTemplate/vendor/jquery-3.2.1.min.js"></script>
+    <!-- Bootstrap JS-->
+    <script src="~/AdminTemplate/vendor/bootstrap-4.1/popper.min.js"></script>
+    <script src="~/AdminTemplate/vendor/bootstrap-4.1/bootstrap.min.js"></script>
+    <!-- Vendor JS       -->
+    <script src="~/AdminTemplate/vendor/slick/slick.min.js"></script>
+    <script src="~/AdminTemplate/vendor/wow/wow.min.js"></script>
+    <script src="~/AdminTemplate/vendor/animsition/animsition.min.js"></script>
+    <script src="~/AdminTemplate/vendor/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
+    <script src="~/AdminTemplate/vendor/counter-up/jquery.waypoints.min.js"></script>
+    <script src="~/AdminTemplate/vendor/counter-up/jquery.counterup.min.js"></script>
+    <script src="~/AdminTemplate/vendor/circle-progress/circle-progress.min.js"></script>
+    <script src="~/AdminTemplate/vendor/perfect-scrollbar/perfect-scrollbar.js"></script>
+    <script src="~/AdminTemplate/vendor/chartjs/Chart.bundle.min.js"></script>
+    <script src="~/AdminTemplate/vendor/select2/select2.min.js"></script>
+    <!-- Main JS-->
+
+    <script src="~/AdminTemplate/js/main.js"></script>
+
+
+</body>
+</html>
