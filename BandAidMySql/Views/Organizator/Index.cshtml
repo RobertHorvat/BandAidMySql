@@ -1,4 +1,4 @@
-﻿@model BandAidMySql.Models.Users
+﻿@model BandAidMySql.Models.Events
 @{
     Layout = null;
 }
@@ -39,28 +39,28 @@
             <div class="section__content section__content--p35">
                 <div class="header3-wrap">
                     <div class="header__logo">
-                        <a asp-action="Index" asp-controller="Izvodac">
+                        <a asp-action="Index" asp-controller="Organizator">
                             <img src="~/AdminTemplate/images/icon/BandAid.png" alt="BandAid" />
                         </a>
                     </div>
                     <div class="header__navbar">
                         <ul class="list-unstyled">
                             <li>
-                                <a asp-action="Index" asp-controller="Izvodac">
+                                <a asp-action="Index" asp-controller="Organizator">
                                     <i class="fas fa-address-book-o"></i>Početna
                                     <span class="bot-line"></span>
                                 </a>
                             </li>
                             <li>
-                                <a asp-controller="Izvodac" asp-action="LoggedEvents">
-                                    <i class="fas fa-tachometer-alt"></i>Prijavljeni Eventi
+                                <a asp-controller="Organizator" asp-action="MyEvents">
+                                    <i class="fas fa-tachometer-alt"></i>Moji eventi
                                     <span class="bot-line"></span>
                                 </a>
                             </li>
                             <li>
-                                <a asp-controller="Izvodac" asp-action="OverEvents">
+                                <a asp-controller="Organizator" asp-action="MyArtists">
                                     <i class="fas fa-shopping-basket"></i>
-                                    <span class="bot-line"></span>Odrađeni Eventi
+                                    <span class="bot-line"></span>Moji izvođači
                                 </a>
                             </li>
                         </ul>
@@ -70,10 +70,10 @@
                         <div class="account-wrap">
                             <div class="account-item account-item--style2 clearfix js-item-menu">
                                 <div class="image">
-                                    <img src="@Model.ProfileImg" alt="Profile" />
+                                    <img src="@ViewBag.User.ProfileImg" alt="Profile" />
                                 </div>
                                 <div class="content">
-                                    <a class="js-acc-btn">@Model.Name</a>
+                                    <a class="js-acc-btn">@ViewBag.User.Name</a>
                                 </div>
                                 <div class="account-dropdown js-dropdown">
                                     <div class="info clearfix">
@@ -84,13 +84,13 @@
                                         </div>
                                         <div class="content">
                                             <h5 class="name">
-                                                <a>@Model.Name</a>
+                                                <a>@ViewBag.User.Name</a>
                                             </h5>
-                                            <span class="email">@Model.Email</span>
+                                            <span class="email">@ViewBag.User.Email</span>
                                         </div>
                                     </div>
                                     <div class="account-dropdown__body">
-                                        <a asp-controller="Izvodac" asp-action="Settings">
+                                        <a asp-controller="Organizator" asp-action="Settings">
                                             <i class="zmdi zmdi-settings"></i>Postavke
                                         </a>
 
@@ -113,7 +113,7 @@
             <div class="header-mobile__bar">
                 <div class="container-fluid">
                     <div class="header-mobile-inner">
-                        <a class="logo" asp-action="Index" asp-controller="Izvodac">
+                        <a class="logo" asp-action="Index" asp-controller="Organizator">
                             <img src="~/AdminTemplate/images/icon/BandAid.png" alt="BandAid" />
                         </a>
                         <button class="hamburger hamburger--slider" type="button">
@@ -128,21 +128,21 @@
                 <div class="container-fluid">
                     <ul class="navbar-mobile__list list-unstyled">
                         <li>
-                            <a asp-action="Index" asp-controller="Izvodac">
+                            <a asp-action="Index" asp-controller="Organizator">
                                 <i class="fas fa-address-book-o"></i>Početna
 
                             </a>
                         </li>
                         <li>
-                            <a asp-controller="Izvodac" asp-action="LoggedEvents">
-                                <i class="fas fa-tachometer-alt"></i>Prijavljeni Eventi
+                            <a asp-controller="Organizator" asp-action="MyEvents">
+                                <i class="fas fa-tachometer-alt"></i>Moji Eventi
 
                             </a>
                         </li>
                         <li>
-                            <a asp-controller="Izvodac" asp-action="OverEvents">
+                            <a asp-controller="Organizator" asp-action="MyArtists">
                                 <i class="fas fa-shopping-basket"></i>
-                                Odrađeni Eventi
+                                Moji izvođači
                             </a>
                         </li>
 
@@ -157,27 +157,27 @@
                 <div class="account-wrap">
                     <div class="account-item account-item--style2 clearfix js-item-menu">
                         <div class="image">
-                            <img src="@Model.ProfileImg" alt="Admin" />
+                            <img src="@ViewBag.User.ProfileImg" alt="Admin" />
                         </div>
                         <div class="content">
-                            <a class="js-acc-btn" href="#">@Model.Name</a>
+                            <a class="js-acc-btn" href="#">@ViewBag.User.Name</a>
                         </div>
                         <div class="account-dropdown js-dropdown">
                             <div class="info clearfix">
                                 <div class="image">
-                                    <a asp-action="Index" asp-controller="Izvodac">
-                                        <img src="@Model.ProfileImg" alt="Profile" />
+                                    <a asp-action="Index" asp-controller="Organizator">
+                                        <img src="@ViewBag.User.ProfileImg" alt="Profile" />
                                     </a>
                                 </div>
                                 <div class="content">
                                     <h5 class="name">
-                                        <a>@Model.Name</a>
+                                        <a>@ViewBag.User.Name</a>
                                     </h5>
-                                    <span class="email">@Model.Email</span>
+                                    <span class="email">@ViewBag.User.Email</span>
                                 </div>
                             </div>
                             <div class="account-dropdown__body">
-                                <a asp-action="Settings" asp-controller="Izvodac"></a>
+                                <a asp-action="Settings" asp-controller="Organizator"></a>
 
 
                             </div>
@@ -217,7 +217,7 @@
                         <div class="col-md-12">
                             <h1 class="title-4">
                                 Dobrodošli,
-                                <span>@Model.Name!</span>
+                                <span>@ViewBag.User.Name!</span>
                             </h1>
                             <hr class="line-seprate">
                         </div>
@@ -227,7 +227,7 @@
             <!-- END WELCOME-->
             <div class="main-content">
                 <div class="col-md-12">
-                    <h2>Dostupni Eventi(@ViewBag.BrojEvenata)</h2>
+                    <h2>Izradite novi event!</h2>
                     <hr class="line-seprate">
                 </div>
                 <br />
@@ -235,60 +235,85 @@
                 <div class="section__content section__content--p30">
                     <div class="container-fluid">
                         <div class="row">
-                            @if (ViewBag.SviEventi != null)
-                            {
-                                @foreach (Events e in ViewBag.SviEventi)
-                                {
-
-                                    <div class="col-md-4">
-                                        <div class="card">
-                                            <img class="card-img-top" src="@e.ImgUrl" alt="Image">
-                                            <div class="card-body">
-                                                <h4 class="card-title mb-3"><a asp-action="EventDetails" asp-controller="Izvodac" asp-route-id="@e.EventId">@e.Name</a></h4>
-                                                <p class="card-text">
-                                                    @e.Description
-                                                </p>
-                                                <div class="align-self-sm-end"><label class="alert-success"><a  asp-controller="Izvodac" asp-action="SaveEvent" asp-route-id="@e.EventId">Prijavi</a></label></div>
+                            <div class="card">
+                                <div class="card-header">
+                                    <strong>Novi Event</strong>
+                                </div>
+                                <form role="form" asp-action="Index" asp-controller="Organizator" method="post" enctype="multipart/form-data">
+                                    <div class="card-body card-block">
+                                        <div class="row form-group">
+                                            <div class="col col-md-3">
+                                                <label class=" form-control-label">Naziv eventa:</label>
+                                            </div>
+                                            <div class="col-12 col-md-9">
+                                                <input type="text" id="Name" name="Name" value="@Model.Name" class="form-control">
+                                                <span asp-validation-for="Name"></span>
+                                            </div>
+                                        </div>
+                                        <div class="row form-group">
+                                            <div class="col col-md-3">
+                                                <label class=" form-control-label">Datum eventa:</label>
+                                            </div>
+                                            <div class="col-12 col-md-9">
+                                                <input type="date" id="Date" name="Date" value="@Model.Date" class="form-control">
+                                                <span asp-validation-for="Date"></span>
+                                            </div>
+                                        </div>
+                                        <div class="row form-group">
+                                            <div class="col col-md-3">
+                                                <label class=" form-control-label">Adresa:</label>
+                                            </div>
+                                            <div class="col-12 col-md-9">
+                                                <input type="Text" id="Adress" name="Adress" value="@Model.Adress" class="form-control">
+                                                <span asp-validation-for="Adress"></span>
+                                            </div>
+                                        </div>
+                                        <div class="row form-group">
+                                            <div class="col col-md-3">
+                                                <label for="textarea-input" class=" form-control-label">Opis</label>
+                                            </div>
+                                            <div class="col-12 col-md-9">
+                                                <textarea name="Description" id="Description" rows="15" value="@Model.Description" class="form-control"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="row form-group">
+                                            <div class="col col-md-3">
+                                                <label for="file-input" class=" form-control-label">Slika profila:</label>
+                                            </div>
+                                            <div class="col-12 col-md-9">
+                                                <input type="file" id="ImgUrl" name="Img" value="@Model.ImgUrl" class="form-control-file">
                                             </div>
                                         </div>
                                     </div>
-
-                                }
-
-                            }
-                            else
-                            {
-                                <div class="col-md-4">
-                                    <div class="card">
-                                        <img class="card-img-top" style="height:200px;width:200px" src="~/images/usklicnik.jpg" alt="Image">
-                                        <div class="card-body">
-                                            <h4 class="card-title mb-3">Nema evenata</h4>
-                                            <p class="card-text">
-                                                Nema dostupnih evenata :(
-                                            </p>
-                                            
-                                        </div>
+                                    <div class="card-footer">
+                                        <button type="submit" class="btn btn-primary btn-sm">
+                                            <i class="fa fa-dot-circle-o"></i> Spremi
+                                        </button>
+                                        <button type="reset" class="btn btn-danger btn-sm">
+                                            <i class="fa fa-ban"></i> Odbaci
+                                        </button>
                                     </div>
-                                </div>
-                            }
 
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- COPYRIGHT-->
-            <section class="p-t-60 p-b-20">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="copyright">
-                                <p> Designed &amp; Developed by MEV Computer Science students</p>
+                                </form>
+
                             </div>
                         </div>
                     </div>
                 </div>
-            </section>
-            <!-- END COPYRIGHT-->
+                <!-- COPYRIGHT-->
+                <section class="p-t-60 p-b-20">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="copyright">
+                                    <p> Designed &amp; Developed by MEV Computer Science students</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <!-- END COPYRIGHT-->
+            </div>
         </div>
     </div>
     <!-- Jquery JS-->
@@ -308,10 +333,9 @@
     <script src="~/AdminTemplate/vendor/chartjs/Chart.bundle.min.js"></script>
     <script src="~/AdminTemplate/vendor/select2/select2.min.js"></script>
     <!-- Main JS-->
-    
+
     <script src="~/AdminTemplate/js/main.js"></script>
 
 
 </body>
 </html>
-<!-- end document-->

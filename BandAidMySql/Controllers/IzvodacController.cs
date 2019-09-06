@@ -33,11 +33,27 @@ namespace BandAidMySql.Controllers
             }
             else
             {
-                List<Events> _events = _database.Events.Where(it => it.StatusId == 5).ToList();
-                
+				List<Events> userEvents = _database.Events.Where(it => it.UserId == HttpContext.Session.GetObjectFromJson<Users>("user").UserId).ToList();
+				List<Events> isti = new List<Events>();
+				foreach(Events e in _database.Events)
+				{
+					foreach(Events ev in userEvents)
+					{
+						if (e.Name == ev.Name)
+						{
+							isti.Add(e);
+						}
+					}
+				}
+                List<Events> _events = _database.Events.Where(it => it.StatusId == 5 ).ToList();
+				foreach(Events e in isti)
+				{
+					_events.RemoveAll(it => it.Name == e.Name);
+				}
+				_events.RemoveAll(it => it.StatusId == 4);
                 if (!_events.Any())
                 {
-                    ViewBag.SviEventi = "Nema evenata u bazi!";
+                    ViewBag.SviEventi = _events;
                     ViewBag.BrojEvenata = 0.ToString();
                    
                 }
@@ -65,89 +81,71 @@ namespace BandAidMySql.Controllers
             else
             {
                 List<Events> _events = HttpContext.Session.GetObjectFromJson<Users>("user").Events.ToList();
-
-                if (!_events.Any())
-                {
-                    ViewBag.SviEventi = "Niste pretplaceni na nijedan event";
-                    ViewBag.BrojEvenata = 0.ToString();
-
-                }
-                else
-                {
-                    ViewBag.SviEventi = _events;
-                    ViewBag.BrojEvenata = _events.Count().ToString();
-
-                }
+				Users user = _database.Users.FirstOrDefault(it => it.UserId == HttpContext.Session.GetObjectFromJson<Users>("user").UserId);
 
 
-
-                return View(HttpContext.Session.GetObjectFromJson<Users>("user"));
+                return View(user);
             }
 
 
         }
-        [HttpPost]
-        public IActionResult Settings(Users user,IFormFile Img)
-        {
+		[HttpPost]
+		public IActionResult Settings(Users user, IFormFile Img)
+		{
+			Users newUser = _database.Users.FirstOrDefault(it=>it.UserId==HttpContext.Session.GetObjectFromJson<Users>("user").UserId);
+			if (HttpContext.Session.GetObjectFromJson<Users>("user") == null || HttpContext.Session.GetObjectFromJson<Users>("user").RoleId != 2)
+			{
+				return RedirectToAction("Index", "Home");
+			}
 
-            if (HttpContext.Session.GetObjectFromJson<Users>("user") == null || HttpContext.Session.GetObjectFromJson<Users>("user").RoleId != 2)
-            {
-                return RedirectToAction("Index", "Home");
-            }
-            else
-            {
-                Users newUser = HttpContext.Session.GetObjectFromJson<Users>("user");
-                if(newUser.PhoneNumber!=user.PhoneNumber)
-                {
-                    newUser.PhoneNumber = user.PhoneNumber;
-                }
-                else if(newUser.Street!=user.Street)
-                {
-                    newUser.Street = user.Street;
-                }
-                else if(newUser.PostCode!=user.PostCode)
-                {
-                    newUser.PostCode = user.PostCode;
-                }
-                else if(newUser.City!=user.City)
-                {
-                    newUser.City = user.City;
-                }
-                else if(newUser.Youtube!=user.Youtube)
-                {
-                    newUser.Youtube = user.Youtube;
-                }
-                else if(newUser.Instagram!=user.Instagram)
-                {
-                    newUser.Instagram = user.Instagram;
-                }
-                else if(newUser.Facebook!=user.Facebook)
-                {
-                    newUser.Facebook = user.Facebook;
-                }
-                else if(newUser.Description!=user.Description)
-                {
-                    newUser.Description = user.Description;
-                }
-                else if(Img!=null)
-                {
-                    var fileName = Path.Combine(he.WebRootPath, "\\ProfilePics\\", Path.GetFileName(Img.FileName));
-                    using (var fs = new FileStream(fileName, FileMode.Create))
-                    {
-                        Img.CopyTo(fs);
-                    }
-                    newUser.ProfileImg = "~/ProfilePics/"+ Path.GetFileName(Img.FileName);
-                }
+			else if (newUser == user)
+			{
 
-                _database.Users.Update(newUser);
-                _database.SaveChanges();
+				
+				
+				return View(user);
+			}
+			else if (user!=newUser)
+			{
 
 
-                return View(newUser);
-            }
+				try
+				{
+					string fileName = he.WebRootPath + "\\ProfilePics\\" + Path.GetFileName(Img.FileName);
+					using (var fs = new FileStream(fileName, FileMode.Create))
+					{
+						Img.CopyTo(fs);
+					}
+					newUser.ProfileImg = "~/ProfilePics/" + Path.GetFileName(Img.FileName);
+				}
+				catch (Exception)
+				{
+
+					
+				}
+				
+				
+				newUser.City = user.City;
+					newUser.Street = user.Street;
+					newUser.PhoneNumber = user.PhoneNumber;
+					newUser.Description = user.Description;
+					newUser.Youtube = user.Youtube;
+					newUser.Facebook = user.Facebook;
+					newUser.Instagram = user.Instagram;
+					newUser.PostCode = user.PostCode;
+				
+			}
+
+				_database.Users.Update(newUser);
+				_database.SaveChanges();
 
 
-        }
+				return View(newUser);
+			}
+		
+
+
+        
 
         [HttpGet]
         public IActionResult LoggedEvents()
@@ -158,9 +156,10 @@ namespace BandAidMySql.Controllers
             }
             else
             {
-                List<Events> _events = HttpContext.Session.GetObjectFromJson<Users>("user").Events.ToList();
-                
-                if (_events.Count() == 0)
+				Users user = HttpContext.Session.GetObjectFromJson<Users>("user");
+                List<Events> _events = _database.Events.Where(it => it.UserId == user.UserId && (it.StatusId== 2 || it.StatusId==6 || it.StatusId == 1 || it.StatusId == 3) ).ToList();
+
+				if (_events.Count() == 0)
                 {
                     ViewBag.NemaEvenata = "Niste pretplaćeni na nijedan event.";
                 }
@@ -171,137 +170,32 @@ namespace BandAidMySql.Controllers
                 return View(HttpContext.Session.GetObjectFromJson<Users>("user"));
             }
         }
-        [HttpPost]
-        public IActionResult Events(string status, string searchString)
-        {
-            if (HttpContext.Session.GetObjectFromJson<Users>("user") == null || HttpContext.Session.GetObjectFromJson<Users>("user").RoleId != 1)
-            {
 
-                return RedirectToAction("Index", "Home");
-            }
-            else
-            {
+		[HttpGet]
+		public IActionResult OverEvents()
+		{
+			if (HttpContext.Session.GetObjectFromJson<Users>("user") == null || HttpContext.Session.GetObjectFromJson<Users>("user").RoleId != 2)
+			{
+				return RedirectToAction("Index", "Home");
+			}
+			else
+			{
+				Users user = HttpContext.Session.GetObjectFromJson<Users>("user");
+				List<Events> _events = _database.Events.Where(it => it.UserId == user.UserId && it.StatusId == 4).ToList();
 
-                List<Events> _events = new List<Events>();
-                List<Users> _users = _database.Users.ToList();
-
-                if (status != null)
-                {
-                    switch (status)
-                    {
-                        case ("Zatvoreno"):
-                            foreach (Events r in _database.Events.Where(it => it.StatusId == 4))
-                            {
-                                _events.Add(r);
-                            }
-                            break;
-                        case ("Otvoreno"):
-                            foreach (Events r in _database.Events.Where(it => it.StatusId == 5))
-                            {
-                                _events.Add(r);
-                            }
-                            break;
-
-                        default:
-                            break;
-                    }
-
-                }
-                else if (searchString != null)
-                {
-                    foreach (Events r in _database.Events)
-                    {
-                        if (r.Name.Contains(searchString) || r.Adress.Contains(searchString))
-                            _events.Add(r);
-
-                    }
-
-                }
-                else
-                {
-                    _events = _database.Events.ToList();
-
-                }
-                ViewBag.Eventi = _events;
-                ViewBag.Korisnici = _users;
-                ViewBag.SearchString = searchString;
-                return View(HttpContext.Session.GetObjectFromJson<Users>("user"));
-            }
-
-        }
-
-        [HttpPost]
-        public JsonResult DeleteUser([FromBody]Users _user)
-        {
-            if (HttpContext.Session.GetObjectFromJson<Users>("user") == null || HttpContext.Session.GetObjectFromJson<Users>("user").RoleId != 1)
-            {
-                return Json(null);
-            }
-            else
-            {
-                Users user = _database.Users.FirstOrDefault(it => it.Email == _user.Email);
-                try
-                {
-                    _database.Users.Remove(user);
-                    _database.SaveChanges();
-                    return Json(true);
-                }
-                catch
-                {
-
-                    return Json(false);
-                }
-
-            }
-        }
-        [HttpPost]
-        public JsonResult DeleteEvent([FromBody]Events _event)
-        {
-            if (HttpContext.Session.GetObjectFromJson<Users>("user") == null || HttpContext.Session.GetObjectFromJson<Users>("user").RoleId != 1)
-            {
-                return Json(null);
-            }
-            else
-            {
-                Events _Event = _database.Events.FirstOrDefault(it => it.Name == _event.Name);
-                try
-                {
-                    _database.Events.Remove(_Event);
-                    _database.SaveChanges();
-                    return Json(true);
-                }
-                catch
-                {
-
-                    return Json(false);
-                }
-
-            }
-        }
-        //[HttpPost]
-        //public JsonResult UserProcess([FromBody]Users user)
-        //{
-        //    if (HttpContext.Session.GetObjectFromJson<Users>("user") == null || HttpContext.Session.GetObjectFromJson<Users>("user").RoleId != 1)
-        //    {
-        //        return Json(null);
-        //    }
-        //    else
-        //    {
-        //        Users _user = _database.Users.FirstOrDefault(it => it.Email == user.Email);
-        //        try
-        //        {
-
-        //            return Json(_user);
-        //        }
-        //        catch
-        //        {
-
-        //            return Json(false);
-        //        }
-
-        //    }
-        //}
-
+				if (_events.Count() == 0)
+				{
+					ViewBag.NemaEvenata = "Niste pretplaćeni na nijedan event.";
+				}
+				else
+				{
+					ViewBag.Eventi = _events;
+				}
+				return View(HttpContext.Session.GetObjectFromJson<Users>("user"));
+			}
+		}
+		
+    
         [HttpGet]
         public IActionResult Event(string email)
         {
@@ -329,42 +223,77 @@ namespace BandAidMySql.Controllers
             }
         }
 
+		[HttpGet]
+		public IActionResult SaveEvent(int id)
+		{
+			if (HttpContext.Session.GetObjectFromJson<Users>("user") == null || HttpContext.Session.GetObjectFromJson<Users>("user").RoleId != 2)
+			{
+				return RedirectToAction("Index", "Home");
+			}
+			else
+			{
+				Users user = _database.Users.FirstOrDefault(it => it.UserId == HttpContext.Session.GetObjectFromJson<Users>("user").UserId);
+				Events old = _database.Events.FirstOrDefault(it => it.EventId == id);
+				Events newEvent = new Events();
+				int lastIndex = _database.Events.Max(it => it.EventId);
+				newEvent.EventId = lastIndex + 1;
+				newEvent.Adress = old.Adress;
+				newEvent.Date = old.Date;
+				newEvent.Description = old.Description;
+				newEvent.ImgUrl = old.ImgUrl;
+				newEvent.Name = old.Name;
+				newEvent.PhoneNumber = old.PhoneNumber;
+				newEvent.StatusId = 2;
+				//newEvent.Status = _database.Statuses.FirstOrDefault(it => it.StatusId == 2);
+				//newEvent.User = HttpContext.Session.GetObjectFromJson<Users>("user");
+				newEvent.UserId = HttpContext.Session.GetObjectFromJson<Users>("user").UserId;
 
-        public IActionResult UserView(int id)
-        {
-            if (HttpContext.Session.GetObjectFromJson<Users>("user") == null || HttpContext.Session.GetObjectFromJson<Users>("user").RoleId != 1)
-            {
-                return RedirectToAction("Index", "Home");
-            }
-            else
-            {
-                try
-                {
-                    //int Id = Int32.Parse(id);
-                    Users _user = _database.Users.FirstOrDefault(it => it.UserId == id);
-                    List<Events> _events = _database.Events.Where(it => it.UserId == _user.UserId).ToList();
+				_database.Events.Add(newEvent);
+				_database.SaveChanges();
 
-                    if (!_events.Any())
-                    {
-                        ViewBag.Korisnik = _user;
-                        ViewBag.Eventi = null;
-                    }
-                    else
-                    {
-                        ViewBag.Eventi = _events;
-                        ViewBag.Korisnik = _user;
+				
+				return RedirectToAction("LoggedEvents",user);
+			}
+		}
+
+		[HttpGet]
+		public IActionResult EventDetails(int id)
+		{
+			if (HttpContext.Session.GetObjectFromJson<Users>("user") == null || HttpContext.Session.GetObjectFromJson<Users>("user").RoleId != 2)
+			{
+				return RedirectToAction("Index", "Home");
+			}
+			else
+			{
+				Users user = _database.Users.FirstOrDefault(it => it.UserId == HttpContext.Session.GetObjectFromJson<Users>("user").UserId);
+				Events ev = _database.Events.FirstOrDefault(it => it.EventId == id);
+				ViewBag.Event = ev;
+
+				return View(user);
+			}
+		}
+
+		[HttpGet]
+		public IActionResult DeleteEvent(int id)
+		{
+			if (HttpContext.Session.GetObjectFromJson<Users>("user") == null || HttpContext.Session.GetObjectFromJson<Users>("user").RoleId != 2)
+			{
+				return RedirectToAction("Index", "Home");
+			}
+			else
+			{
+				Users user = _database.Users.FirstOrDefault(it => it.UserId == HttpContext.Session.GetObjectFromJson<Users>("user").UserId);
+				Events old = _database.Events.FirstOrDefault(it => it.EventId == id);
 
 
-                    }
-                    return View(HttpContext.Session.GetObjectFromJson<Users>("user"));
-                }
-                catch
-                {
+				_database.Events.Remove(old);
+				_database.SaveChanges();
 
-                    return RedirectToAction("Users", "Admin");
-                }
 
-            }
-        }
-    }
+				return RedirectToAction("LoggedEvents", user);
+			}
+		}
+
+
+	}
 }

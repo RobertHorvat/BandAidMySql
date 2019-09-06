@@ -100,11 +100,12 @@ namespace BandAidMySql.Controllers
                 {
                     SendMessage(user);
                     _message = "Hvala na pitanju, pokušat ćemo odgovoriti u najkraćem mogućem roku!";
+					return RedirectToAction("Index");
                 }
                 catch (Exception e)
                 {
 
-                    _message = e.Message;
+					_message = "Došlo je do pogreške, pokušajte ponovno kasnije :(";
                 }
                 ViewBag.Message = _message;
                 ViewBag.Info = _info;

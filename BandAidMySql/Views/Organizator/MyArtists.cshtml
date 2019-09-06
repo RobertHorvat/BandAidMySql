@@ -1,7 +1,9 @@
-﻿@model BandAidMySql.Models.Users
+﻿@model List<BandAidMySql.Models.PomocneKlase.KorisnikEventa>
 @{
     Layout = null;
 }
+@using static BandAidMySql.Models.PomocneKlase.KorisnikEventa
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -13,7 +15,7 @@
     <meta name="author" content="Hau Nguyen">
     <meta name="keywords" content="au theme template">
     <!-- Title Page-->
-    <title>BandAid</title>
+    <title>Index</title>
     <!-- Fontfaces CSS-->
     <link href="~/AdminTemplate/css/font-face.css" rel="stylesheet" media="all">
     <link href="~/AdminTemplate/vendor/font-awesome-4.7/css/font-awesome.min.css" rel="stylesheet" media="all">
@@ -39,28 +41,28 @@
             <div class="section__content section__content--p35">
                 <div class="header3-wrap">
                     <div class="header__logo">
-                        <a asp-action="Index" asp-controller="Izvodac">
+                        <a asp-action="Index" asp-controller="Admin">
                             <img src="~/AdminTemplate/images/icon/BandAid.png" alt="BandAid" />
                         </a>
                     </div>
                     <div class="header__navbar">
                         <ul class="list-unstyled">
                             <li>
-                                <a asp-action="Index" asp-controller="Izvodac">
+                                <a asp-action="Index" asp-controller="Organizator">
                                     <i class="fas fa-address-book-o"></i>Početna
                                     <span class="bot-line"></span>
                                 </a>
                             </li>
                             <li>
-                                <a asp-controller="Izvodac" asp-action="LoggedEvents">
-                                    <i class="fas fa-tachometer-alt"></i>Prijavljeni Eventi
+                                <a asp-controller="Organizator" asp-action="MyEvents">
+                                    <i class="fas fa-tachometer-alt"></i>Moji Eventi
                                     <span class="bot-line"></span>
                                 </a>
                             </li>
                             <li>
-                                <a asp-controller="Izvodac" asp-action="OverEvents">
+                                <a asp-controller="Organizator" asp-action="MyArtists">
                                     <i class="fas fa-shopping-basket"></i>
-                                    <span class="bot-line"></span>Odrađeni Eventi
+                                    <span class="bot-line"></span>Moji Izvođači
                                 </a>
                             </li>
                         </ul>
@@ -70,29 +72,27 @@
                         <div class="account-wrap">
                             <div class="account-item account-item--style2 clearfix js-item-menu">
                                 <div class="image">
-                                    <img src="@Model.ProfileImg" alt="Profile" />
+                                    <img src="~/AdminTemplate/images/icon/avatar-01.jpg" alt="Admin" />
                                 </div>
                                 <div class="content">
-                                    <a class="js-acc-btn">@Model.Name</a>
+                                    <a class="js-acc-btn" asp-action="Home" asp-controller="Admin">@ViewBag.User.Name</a>
                                 </div>
                                 <div class="account-dropdown js-dropdown">
                                     <div class="info clearfix">
                                         <div class="image">
-                                            <a>
+                                            <a href="#">
                                                 <img src="~/AdminTemplate/images/icon/avatar-01.jpg" alt="Admin" />
                                             </a>
                                         </div>
                                         <div class="content">
                                             <h5 class="name">
-                                                <a>@Model.Name</a>
+                                                <a>@ViewBag.User.Name</a>
                                             </h5>
-                                            <span class="email">@Model.Email</span>
+                                            <span class="email">@ViewBag.User.Email</span>
                                         </div>
                                     </div>
                                     <div class="account-dropdown__body">
-                                        <a asp-controller="Izvodac" asp-action="Settings">
-                                            <i class="zmdi zmdi-settings"></i>Postavke
-                                        </a>
+
 
                                     </div>
                                     <div class="account-dropdown__footer">
@@ -113,7 +113,7 @@
             <div class="header-mobile__bar">
                 <div class="container-fluid">
                     <div class="header-mobile-inner">
-                        <a class="logo" asp-action="Index" asp-controller="Izvodac">
+                        <a class="logo" asp-action="Index" asp-controller="Organizator">
                             <img src="~/AdminTemplate/images/icon/BandAid.png" alt="BandAid" />
                         </a>
                         <button class="hamburger hamburger--slider" type="button">
@@ -128,21 +128,19 @@
                 <div class="container-fluid">
                     <ul class="navbar-mobile__list list-unstyled">
                         <li>
-                            <a asp-action="Index" asp-controller="Izvodac">
+                            <a asp-action="Index" asp-controller="Organizator">
                                 <i class="fas fa-address-book-o"></i>Početna
 
                             </a>
                         </li>
                         <li>
-                            <a asp-controller="Izvodac" asp-action="LoggedEvents">
-                                <i class="fas fa-tachometer-alt"></i>Prijavljeni Eventi
-
+                            <a asp-action="MyEvents" asp-controller="Organizator">
+                                <i class="fas fa-tachometer-alt"></i>Moji Eventi
                             </a>
                         </li>
                         <li>
-                            <a asp-controller="Izvodac" asp-action="OverEvents">
-                                <i class="fas fa-shopping-basket"></i>
-                                Odrađeni Eventi
+                            <a asp-action="MyArtists" asp-controller="Organizator">
+                                <i class="fas fa-chart-bar"></i>Moji Izvođači
                             </a>
                         </li>
 
@@ -157,27 +155,27 @@
                 <div class="account-wrap">
                     <div class="account-item account-item--style2 clearfix js-item-menu">
                         <div class="image">
-                            <img src="@Model.ProfileImg" alt="Admin" />
+                            <img src="images/icon/avatar-01.jpg" alt="Admin" />
                         </div>
                         <div class="content">
-                            <a class="js-acc-btn" href="#">@Model.Name</a>
+                            <a class="js-acc-btn">@ViewBag.User.Name</a>
                         </div>
                         <div class="account-dropdown js-dropdown">
                             <div class="info clearfix">
                                 <div class="image">
-                                    <a asp-action="Index" asp-controller="Izvodac">
-                                        <img src="@Model.ProfileImg" alt="Profile" />
+                                    <a>
+                                        <img src="images/icon/avatar-01.jpg" alt="Admin" />
                                     </a>
                                 </div>
                                 <div class="content">
                                     <h5 class="name">
-                                        <a>@Model.Name</a>
+                                        <a>@ViewBag.User.Name</a>
                                     </h5>
-                                    <span class="email">@Model.Email</span>
+                                    <span class="email">@ViewBag.User.Email</span>
                                 </div>
                             </div>
                             <div class="account-dropdown__body">
-                                <a asp-action="Settings" asp-controller="Izvodac"></a>
+
 
 
                             </div>
@@ -217,7 +215,7 @@
                         <div class="col-md-12">
                             <h1 class="title-4">
                                 Dobrodošli,
-                                <span>@Model.Name!</span>
+                                <span>@ViewBag.User.Name!</span>
                             </h1>
                             <hr class="line-seprate">
                         </div>
@@ -225,34 +223,72 @@
                 </div>
             </section>
             <!-- END WELCOME-->
-            <div class="main-content">
-                <div class="col-md-12">
-                    <h2>Dostupni Eventi(@ViewBag.BrojEvenata)</h2>
-                    <hr class="line-seprate">
-                </div>
-                <br />
-                <br />
-                <div class="section__content section__content--p30">
-                    <div class="container-fluid">
-                        <div class="row">
-                            @if (ViewBag.SviEventi != null)
+            <!-- DATA TABLE-->
+            <section class="p-t-20">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h3 class="title-5 m-b-35">Svi korisnici</h3>
+                            @if (Model != null)
                             {
-                                @foreach (Events e in ViewBag.SviEventi)
+                                @using (Html.BeginForm("SubmitStatus"))
                                 {
+                                    <div class="table-responsive table-responsive-data2">
+                                        <table class="table table-data2">
+                                            
+                                                <tr>
 
-                                    <div class="col-md-4">
-                                        <div class="card">
-                                            <img class="card-img-top" src="@e.ImgUrl" alt="Image">
-                                            <div class="card-body">
-                                                <h4 class="card-title mb-3"><a asp-action="EventDetails" asp-controller="Izvodac" asp-route-id="@e.EventId">@e.Name</a></h4>
-                                                <p class="card-text">
-                                                    @e.Description
-                                                </p>
-                                                <div class="align-self-sm-end"><label class="alert-success"><a  asp-controller="Izvodac" asp-action="SaveEvent" asp-route-id="@e.EventId">Prijavi</a></label></div>
-                                            </div>
-                                        </div>
+                                                    <th>Ime</th>
+                                                    <th>Adresa</th>
+                                                    <th>Email</th>
+                                                    <th>Ime Eventa</th>
+                                                    <th>Status</th>
+                                                    <th></th>
+                                                    <th></th>
+                                                </tr>
+                                            
+                                            
+                                                @for (int i=0;i< Model.Count();i++)
+                                                {
+
+                                                    <tr class="tr-shadow">
+
+
+                                                        <td>
+                                                            <span class="block-email">@Model[i].Name</span>
+                                                        </td>
+                                                        <td class="desc">@Model[i].Adress</td>
+                                                        <td>@Model[i].Email</td>
+                                                        <td>@Model[i].EventName</td>
+                                                        <td>@Model[i].Status</td>
+                                                        @if (Model[i].Status=="UTijeku")
+                                                        {
+                                                            <td>
+                                                                <button title="Potvrdi" onclick="location.href='/Organizator/Confirm?id=@Model[i].UserId&eventName=@Model[i].EventName'">
+                                                                    <i class="zmdi zmdi-check"></i>
+                                                                </button>
+                                                            </td>
+                                                        }
+                                                        else
+                                                        {
+                                                            <td>
+                                                                @Model[i].Status
+                                                            </td>
+                                                        }
+                                                        
+
+
+
+                                                    </tr>
+
+                                                    <tr class="spacer"></tr>
+
+                                                }
+                                            
+                                        </table>
+
+
                                     </div>
-
                                 }
 
                             }
@@ -262,20 +298,42 @@
                                     <div class="card">
                                         <img class="card-img-top" style="height:200px;width:200px" src="~/images/usklicnik.jpg" alt="Image">
                                         <div class="card-body">
-                                            <h4 class="card-title mb-3">Nema evenata</h4>
+                                            <h4 class="card-title mb-3">Nema korisnika</h4>
                                             <p class="card-text">
-                                                Nema dostupnih evenata :(
+                                                Nijedan korisnik nije pretplaćen na vaš/e Event/e :(
                                             </p>
-                                            
                                         </div>
                                     </div>
                                 </div>
                             }
-
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- Modalni prozor -->
+            <div class="modal fade" data-backdrop="static" data-keyboard="false" id="mediumModal" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="mediumModalLabel">Potvrda</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p class="parent">
+                                <strong class="idhere" id="EmailDelete"></strong> će biti trajno izbrisan iz sistema!
+                            </p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Odbaci</button>
+                            <button type="button" class="btn btn-primary" id="zatvori" onclick="submitForm()">Potvrdi</button>
                         </div>
                     </div>
                 </div>
             </div>
+            <!-- end Modalni Prozor -->
+            <!-- END DATA TABLE-->
             <!-- COPYRIGHT-->
             <section class="p-t-60 p-b-20">
                 <div class="container">
@@ -308,10 +366,65 @@
     <script src="~/AdminTemplate/vendor/chartjs/Chart.bundle.min.js"></script>
     <script src="~/AdminTemplate/vendor/select2/select2.min.js"></script>
     <!-- Main JS-->
-    
+    <script>
+        $(document).ready(function () {
+            $('#mediumModal').on('show.bs.modal', function (e) {
+                var id = $(e.relatedTarget).data('id');
+                $(".idhere").html(id);
+            });
+        });
+    </script>
+    <script>
+    function SubmitForm(name, id, btn) {
+        $()
+    }
+    </script>
+    <script>
+        function submitForm() {
+
+            var _event = {};
+            _event.Name = $(".parent").parent().find("strong").text();;
+
+            $("#mediumModal").modal("hide");
+            $('body').removeClass("modal-open");
+            $(".modal-backdrop").remove();
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("SaveStatus")",
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(_event),
+            success: function (response) {
+                if (response == true) {
+
+                    window.location.href ="/Organizator/MyArtists"
+
+                }
+            },
+            failure: function (errMsg) {
+                alert(errMsg);
+
+            }
+            });
+
+
+
+
+
+
+    }
+
+    </script>
+    @*<script>
+            function zatvori() {
+                $("#zatvori").click(function () {
+                    $("#mediumModal").modal("hide");
+                });
+            }
+        </script>*@
+
     <script src="~/AdminTemplate/js/main.js"></script>
 
 
 </body>
 </html>
-<!-- end document-->
