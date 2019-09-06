@@ -34,7 +34,8 @@ namespace BandAidMySql.Controllers
                 }
                 else
                 {
-                    ViewBag.SviEventi = _events.Count()
+                    ViewBag.SviEventi = _events.Where(it=>it.StatusId==5 || it.StatusId==4)
+												.Count()
                                                .ToString();
                     ViewBag.DostupniEventi = _events.Where(it => it.StatusId == 5)
                                                     .Count()
@@ -179,7 +180,7 @@ namespace BandAidMySql.Controllers
             }
             else
             {
-                List<Events> _events = _database.Events.ToList();
+                List<Events> _events = _database.Events.Where(it=>it.StatusId==5||it.StatusId==4).ToList();
                 List<Users> _users = _database.Users.ToList();
                 if (_events.Count()==0)
                 {
@@ -381,7 +382,7 @@ namespace BandAidMySql.Controllers
 
 
                     }
-                    return View(HttpContext.Session.GetObjectFromJson<Users>("user"));
+                    return View(_user);
                 }
                 catch
                 {

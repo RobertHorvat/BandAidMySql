@@ -2,6 +2,12 @@
 @{
     Layout = null;
 }
+@{
+    var Event = new Events();
+    Event = ViewBag.Event;
+
+}
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -13,7 +19,7 @@
     <meta name="author" content="Hau Nguyen">
     <meta name="keywords" content="au theme template">
     <!-- Title Page-->
-    <title>BandAid</title>
+    <title>Index</title>
     <!-- Fontfaces CSS-->
     <link href="~/AdminTemplate/css/font-face.css" rel="stylesheet" media="all">
     <link href="~/AdminTemplate/vendor/font-awesome-4.7/css/font-awesome.min.css" rel="stylesheet" media="all">
@@ -39,7 +45,7 @@
             <div class="section__content section__content--p35">
                 <div class="header3-wrap">
                     <div class="header__logo">
-                        <a asp-action="Index" asp-controller="Izvodac">
+                        <a asp-action="Index" asp-controller="Admin">
                             <img src="~/AdminTemplate/images/icon/BandAid.png" alt="BandAid" />
                         </a>
                     </div>
@@ -70,7 +76,7 @@
                         <div class="account-wrap">
                             <div class="account-item account-item--style2 clearfix js-item-menu">
                                 <div class="image">
-                                    <img src="@Model.ProfileImg" alt="Profile" />
+                                    <img src="~/AdminTemplate/images/icon/avatar-01.jpg" alt="Admin" />
                                 </div>
                                 <div class="content">
                                     <a class="js-acc-btn">@Model.Name</a>
@@ -84,15 +90,13 @@
                                         </div>
                                         <div class="content">
                                             <h5 class="name">
-                                                <a>@Model.Name</a>
+                                                <a>Admin</a>
                                             </h5>
                                             <span class="email">@Model.Email</span>
                                         </div>
                                     </div>
                                     <div class="account-dropdown__body">
-                                        <a asp-controller="Izvodac" asp-action="Settings">
-                                            <i class="zmdi zmdi-settings"></i>Postavke
-                                        </a>
+
 
                                     </div>
                                     <div class="account-dropdown__footer">
@@ -130,19 +134,16 @@
                         <li>
                             <a asp-action="Index" asp-controller="Izvodac">
                                 <i class="fas fa-address-book-o"></i>Početna
-
                             </a>
                         </li>
                         <li>
-                            <a asp-controller="Izvodac" asp-action="LoggedEvents">
+                            <a asp-action="LoggedEvents" asp-controller="Izvodac">
                                 <i class="fas fa-tachometer-alt"></i>Prijavljeni Eventi
-
                             </a>
                         </li>
                         <li>
-                            <a asp-controller="Izvodac" asp-action="OverEvents">
-                                <i class="fas fa-shopping-basket"></i>
-                                Odrađeni Eventi
+                            <a asp-action="OverEvents" asp-controller="Izvodac">
+                                <i class="fas fa-chart-bar"></i>Odrađeni Eventi
                             </a>
                         </li>
 
@@ -157,27 +158,27 @@
                 <div class="account-wrap">
                     <div class="account-item account-item--style2 clearfix js-item-menu">
                         <div class="image">
-                            <img src="@Model.ProfileImg" alt="Admin" />
+                            <img src="~/AdminTemplate/images/icon/avatar-01.jpg" alt="Admin" />
                         </div>
                         <div class="content">
-                            <a class="js-acc-btn" href="#">@Model.Name</a>
+                            <a class="js-acc-btn" href="#">Admin</a>
                         </div>
                         <div class="account-dropdown js-dropdown">
                             <div class="info clearfix">
                                 <div class="image">
                                     <a asp-action="Index" asp-controller="Izvodac">
-                                        <img src="@Model.ProfileImg" alt="Profile" />
+                                        <img src="~/AdminTemplate/images/icon/avatar-01.jpg" alt="Admin" />
                                     </a>
                                 </div>
                                 <div class="content">
                                     <h5 class="name">
-                                        <a>@Model.Name</a>
+                                        <a>Admin</a>
                                     </h5>
                                     <span class="email">@Model.Email</span>
                                 </div>
                             </div>
                             <div class="account-dropdown__body">
-                                <a asp-action="Settings" asp-controller="Izvodac"></a>
+
 
 
                             </div>
@@ -216,66 +217,74 @@
                     <div class="row">
                         <div class="col-md-12">
                             <h1 class="title-4">
-                                Dobrodošli,
-                                <span>@Model.Name!</span>
+
+                                <span>@ViewBag.Event.Name</span>
                             </h1>
-                            <hr class="line-seprate">
+
                         </div>
                     </div>
                 </div>
             </section>
             <!-- END WELCOME-->
-            <div class="main-content">
-                <div class="col-md-12">
-                    <h2>Dostupni Eventi(@ViewBag.BrojEvenata)</h2>
-                    <hr class="line-seprate">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="card">
+                        <img class="card-img-top" src="@ViewBag.Event.ImgUrl" alt="@ViewBag.Event.Name">
+
+                    </div>
                 </div>
-                <br />
-                <br />
-                <div class="section__content section__content--p30">
-                    <div class="container-fluid">
-                        <div class="row">
-                            @if (ViewBag.SviEventi != null)
-                            {
-                                @foreach (Events e in ViewBag.SviEventi)
-                                {
+                <div class="col-md-3 ">
+                    <div class="card">
 
-                                    <div class="col-md-4">
-                                        <div class="card">
-                                            <img class="card-img-top" src="@e.ImgUrl" alt="Image">
-                                            <div class="card-body">
-                                                <h4 class="card-title mb-3"><a asp-action="EventDetails" asp-controller="Izvodac" asp-route-id="@e.EventId">@e.Name</a></h4>
-                                                <p class="card-text">
-                                                    @e.Description
-                                                </p>
-                                                <div class="align-self-sm-end"><label class="alert-success"><a  asp-controller="Izvodac" asp-action="SaveEvent" asp-route-id="@e.EventId">Prijavi</a></label></div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                }
-
-                            }
-                            else
-                            {
-                                <div class="col-md-4">
-                                    <div class="card">
-                                        <img class="card-img-top" style="height:200px;width:200px" src="~/images/usklicnik.jpg" alt="Image">
-                                        <div class="card-body">
-                                            <h4 class="card-title mb-3">Nema evenata</h4>
-                                            <p class="card-text">
-                                                Nema dostupnih evenata :(
-                                            </p>
-                                            
-                                        </div>
-                                    </div>
+                        <div class="card-body card-block">
+                            <div>
+                                <div class="form-group">
+                                    <h4>Naziv</h4>
+                                    <label>@ViewBag.Event.Name</label>
                                 </div>
-                            }
+                                <div class="form-group">
+                                    <h4>Datum</h4>
+                                    <label>@ViewBag.Event.Date</label>
+
+                                </div>
+                                <div class="form-group">
+                                    <h4>Adresa</h4>
+                                    <label>@ViewBag.Event.Adress</label>
+
+                                </div>
+
+
+                                <div class="form-group">
+                                    <h4>Telefonski broj</h4>
+                                    <label>@ViewBag.Event.PhoneNumber</label>
+
+                                </div>
+                            </div>
 
                         </div>
                     </div>
                 </div>
+                <div class="col-md-3 ">
+                    <div class="card">
+
+                        <div class="card-body card-block">
+                            <div>
+                                <div class="form-group">
+                                    <h4>Opis</h4>
+                                    <label class="label-primary">@ViewBag.Event.Description</label>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
             </div>
+            @*<div class="row">
+                    <div>
+
+                    </div>
+                </div>*@
             <!-- COPYRIGHT-->
             <section class="p-t-60 p-b-20">
                 <div class="container">
@@ -308,10 +317,9 @@
     <script src="~/AdminTemplate/vendor/chartjs/Chart.bundle.min.js"></script>
     <script src="~/AdminTemplate/vendor/select2/select2.min.js"></script>
     <!-- Main JS-->
-    
+   
     <script src="~/AdminTemplate/js/main.js"></script>
 
 
 </body>
 </html>
-<!-- end document-->

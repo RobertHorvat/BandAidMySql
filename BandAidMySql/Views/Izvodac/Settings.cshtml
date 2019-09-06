@@ -259,7 +259,7 @@
                                                 <label class=" form-control-label">Broj telefona:</label>
                                             </div>
                                             <div class="col-12 col-md-9">
-                                                <input type="number" id="PhoneNumber" name="PhoneNumber" placeholder="Unesite kontakt telefon" class="form-control">
+                                                <input type="number" id="PhoneNumber" name="PhoneNumber" value="@Model.PhoneNumber" class="form-control">
 
                                             </div>
                                         </div>
@@ -268,7 +268,7 @@
                                                 <label class=" form-control-label">Ulica:</label>
                                             </div>
                                             <div class="col-12 col-md-9">
-                                                <input type="text" id="Street" name="Street" placeholder="Unesite ulicu sjedišta" class="form-control">
+                                                <input type="text" id="Street" name="Street" value="@Model.Street" class="form-control">
                                                 <span asp-validation-for="Street"></span>
                                             </div>
                                         </div>
@@ -277,7 +277,7 @@
                                                 <label class=" form-control-label">Poštanski broj:</label>
                                             </div>
                                             <div class="col-12 col-md-9">
-                                                <input type="number" id="PostCode" name="PostCode" placeholder="Unesite poštanski broj" class="form-control">
+                                                <input type="number" id="PostCode" name="PostCode" value="@Model.PostCode" class="form-control">
                                                 <span asp-validation-for="PostCode"></span>
                                             </div>
                                         </div>
@@ -286,7 +286,7 @@
                                                 <label class=" form-control-label">Grad/općina:</label>
                                             </div>
                                             <div class="col-12 col-md-9">
-                                                <input type="text" id="City" name="City" placeholder="Unesite grad/općinu" class="form-control">
+                                                <input type="text" id="City" name="City" value="@Model.City" class="form-control">
                                                 <span asp-validation-for="City"></span>
                                             </div>
                                         </div>
@@ -295,7 +295,7 @@
                                                 <label class=" form-control-label">Youtube:</label>
                                             </div>
                                             <div class="col-12 col-md-9">
-                                                <input type="text" id="Youtube" name="Youtube" placeholder="Unesite youtube link" class="form-control">
+                                                <input type="text" id="Youtube" name="Youtube" value="@Model.Youtube" class="form-control">
 
                                             </div>
                                         </div>
@@ -304,7 +304,7 @@
                                                 <label class=" form-control-label">Instagram:</label>
                                             </div>
                                             <div class="col-12 col-md-9">
-                                                <input type="text" id="Instagram" name="Instagram" placeholder="Unesite instagram link" class="form-control">
+                                                <input type="text" id="Instagram" name="Instagram" value="@Model.Instagram" class="form-control">
 
                                             </div>
                                         </div>
@@ -313,7 +313,7 @@
                                                 <label class=" form-control-label">Facebook:</label>
                                             </div>
                                             <div class="col-12 col-md-9">
-                                                <input type="text" id="Facebook" name="Facebook" placeholder="Unesite facebook link" class="form-control">
+                                                <input type="text" id="Facebook" name="Facebook" value="@Model.Facebook" class="form-control">
 
                                             </div>
                                         </div>
@@ -322,7 +322,7 @@
                                                 <label for="textarea-input" class=" form-control-label">Opis</label>
                                             </div>
                                             <div class="col-12 col-md-9">
-                                                <textarea name="Description" id="Description" rows="15" placeholder="Opis profila..." class="form-control"></textarea>
+                                                <textarea name="Description" id="Description" rows="15" value="@Model.Description" class="form-control"></textarea>
                                             </div>
                                         </div>
                                         <div class="row form-group">
@@ -330,7 +330,7 @@
                                                 <label for="file-input" class=" form-control-label">Slika profila:</label>
                                             </div>
                                             <div class="col-12 col-md-9">
-                                                <input type="file" id="ProfileImg" name="Img" class="form-control-file">
+                                                <input type="file" id="ProfileImg" name="Img" value="@Model.ProfileImg" class="form-control-file">
                                             </div>
                                         </div>
 

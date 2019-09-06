@@ -216,8 +216,8 @@
                     <div class="row">
                         <div class="col-md-12">
                             <h1 class="title-4">
-                                Dobrodošli,
-                                <span>@Model.Name!</span>
+                                Prijavljeni
+                                <span>eventi</span>
                             </h1>
                             <hr class="line-seprate">
                         </div>
@@ -226,18 +226,14 @@
             </section>
             <!-- END WELCOME-->
             <div class="main-content">
-                <div class="col-md-12">
-                    <h2>Dostupni Eventi(@ViewBag.BrojEvenata)</h2>
-                    <hr class="line-seprate">
-                </div>
-                <br />
-                <br />
+               
+                
                 <div class="section__content section__content--p30">
                     <div class="container-fluid">
                         <div class="row">
-                            @if (ViewBag.SviEventi != null)
+                            @if (ViewBag.Eventi != null)
                             {
-                                @foreach (Events e in ViewBag.SviEventi)
+                                @foreach (Events e in ViewBag.Eventi)
                                 {
 
                                     <div class="col-md-4">
@@ -248,7 +244,38 @@
                                                 <p class="card-text">
                                                     @e.Description
                                                 </p>
-                                                <div class="align-self-sm-end"><label class="alert-success"><a  asp-controller="Izvodac" asp-action="SaveEvent" asp-route-id="@e.EventId">Prijavi</a></label></div>
+                                                <p class="card-text">
+                                                    @{
+                                                        int statement = e.StatusId;
+                                                        switch (statement)
+                                                        {
+                                                            case 1:
+
+                                                                <text>
+                                                                    <span class="status--process">Odobreno</span>
+                                                                </text>
+                                                                break;
+                                                            case 2:
+                                                                <text>
+                                                                    <span class="status--denied">U tijeku</span>
+                                                                </text>
+                                                                break;
+                                                            case 3:
+                                                                <text>
+                                                                    <span class="status--denied">Odbijeno</span>
+                                                                </text>
+                                                                break;
+                                                            case 6:
+                                                                <text>
+                                                                    <span class="status--denied">Otkazano</span>
+                                                                </text>
+                                                                break;
+
+                                                        }
+                                                    }
+                                                </p>
+
+                                                <div class="align-self-sm-end"><label class="alert-danger"><a asp-controller="Izvodac" asp-action="DeleteEvent" asp-route-id="@e.EventId">Obriši</a></label></div>
                                             </div>
                                         </div>
                                     </div>
@@ -264,13 +291,13 @@
                                         <div class="card-body">
                                             <h4 class="card-title mb-3">Nema evenata</h4>
                                             <p class="card-text">
-                                                Nema dostupnih evenata :(
+                                                Niste prijavljeni ni na jedan event :(
                                             </p>
-                                            
                                         </div>
                                     </div>
                                 </div>
                             }
+
 
                         </div>
                     </div>
@@ -308,7 +335,7 @@
     <script src="~/AdminTemplate/vendor/chartjs/Chart.bundle.min.js"></script>
     <script src="~/AdminTemplate/vendor/select2/select2.min.js"></script>
     <!-- Main JS-->
-    
+
     <script src="~/AdminTemplate/js/main.js"></script>
 
 
